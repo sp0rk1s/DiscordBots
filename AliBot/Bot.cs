@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
+using AliBot.Databases;
 
 namespace AliBot;
 
@@ -25,13 +26,14 @@ class Bot {
 
         _client.Log += Logging.Log;
         _commands.Log += Logging.Log;
-        IServiceProvider services = ConfigureServices();
+
+        _services = ConfigureServices();
     }
-    async Task<Bot> Start() {
+    async Task Start() {
         await MainAsync();
     }
 
-    private static IServiceProvider ConfigureServices() {
+    private IServiceProvider ConfigureServices() {
         var map = new ServiceCollection()
             .AddSingleton(new SomeServiceClass());
         return map.BuildServiceProvider();

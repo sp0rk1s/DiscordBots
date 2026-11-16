@@ -15,22 +15,22 @@ partial class Program {
         Diagnostic
     }
 
-    private static readonly Option<FileInfo?> s_databasePathOption = new("--config", "-c") {
-        Description = "Specify database folder path (default: database)",
-        HelpName = "FOLDER"
+    private static readonly Option<FileInfo?> s_databasePathOption = new("--database=<FILE>", "-c") {
+        Description = "Specify database file path (default: database.db)",
+        HelpName = "FILE"
     };
 
-    private static readonly Option<FileInfo?> s_outputPath = new("--config", "-c") {
+    private static readonly Option<FileInfo?> s_outputPath = new("--output=<FOLDER>", "-o") {
         Description = "Specify output logs file path (default: logs/)",
         HelpName = "FOLDER"
     };
 
-    private static readonly Option<FileInfo?> s_configPathOption = new("--config", "-c") {
+    private static readonly Option<FileInfo?> s_configPathOption = new("--config=<FILE>", "-c") {
         Description = "Specify configuration file path (default: config.ini)",
         HelpName = "FILE"
     };
 
-    private static readonly Option<string> s_verbosityOption = new("--verbosity", "-v") {
+    private static readonly Option<string> s_verbosityOption = new("--verbosity=<LEVEL>", "-v") {
         Description = "Output verbosity level. Allowed values are q[uiet], m[inimal], n[ormal], d[etailed], and diag[nostic].",
         HelpName = "LEVEL"
     };
