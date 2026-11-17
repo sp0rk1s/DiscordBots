@@ -15,14 +15,19 @@ partial class Program {
         Diagnostic
     }
 
-    private static readonly Option<FileInfo?> s_databasePathOption = new("--database=<FILE>", "-c") {
+    private static readonly Option<FileInfo?> s_folderPath = new("--folder=<FILE>", "-f") {
+        Description = "Specify database file path (default: ../)",
+        HelpName = "DIRECTORY"
+    };
+
+    private static readonly Option<FileInfo?> s_databasePathOption = new("--database=<FILE>", "-d") {
         Description = "Specify database file path (default: database.db)",
         HelpName = "FILE"
     };
 
     private static readonly Option<FileInfo?> s_outputPath = new("--output=<FOLDER>", "-o") {
         Description = "Specify output logs file path (default: logs/)",
-        HelpName = "FOLDER"
+        HelpName = "DIRECTORY"
     };
 
     private static readonly Option<FileInfo?> s_configPathOption = new("--config=<FILE>", "-c") {

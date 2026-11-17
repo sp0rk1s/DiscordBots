@@ -9,8 +9,8 @@ namespace AliBot.Data {
             get { return _accounts[id]; }
         }
 
-        public Bank() {
-            _accounts = new Dictionary<int, BankAccount>();
+        public Bank(Database database) {
+            _accounts = [];
         }
     }
 }

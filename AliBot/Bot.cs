@@ -7,6 +7,7 @@ using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
 using AliBot.Databases;
+using AliBot.Utilities;
 
 namespace AliBot;
 

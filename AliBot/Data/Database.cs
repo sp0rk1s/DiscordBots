@@ -1,28 +1,52 @@
-﻿using Microsoft.Data.Sqlite;
+﻿using AliBot.Utilities;
+using Microsoft.Data.Sqlite;
 
 namespace AliBot.Data;
-public class Database {
 
-    private const string CREATE_TABLES_COMMAND = """
-        
-        CREATE TABLE IF NOT EXISTS "Users" (
-            "userId"	INTEGER NOT NULL UNIQUE,
-            PRIMARY KEY("userId") ON CONFLICT ABORT
-        ) WITHOUT ROWID,STRICT;
-        
-    """;
-    public string path;
-    public string[] tables;
+public partial class Database {
+
+    public string ConnectionString;
 
     public Database(string path) {
-        this.path = path;
-        tables = [];
+        // Verify arguments
+        ValidatePath(path);
+
+        if (!File.Exists(path)) {
+            Logging.Note($"Created Database at {path}");
+        } else {
+            Logging.Note($"Database at {path}");
+        }
+
+        // Setup Database
+        ConnectionString = new SqliteConnectionStringBuilder().DataSource = path;
         using (SqliteConnection connection = new(path)) {
             connection.Open();
-            //DataTable tableSchema = connection.GetSchema("Tables");
-            using (SqliteCommand command = new(CREATE_TABLES_COMMAND, connection)) {
-                command.ExecuteNonQuery(); // Create new if the necessary tables are missing
+            foreach (KeyValuePair<string, string> tableQueryPair in MainDatabaseCreationQueries) {
+                using SqliteCommand command = new(tableQueryPair.Value, connection);
+                int changes = command.ExecuteNonQuery();
+                if (changes > 0) {
+                    Logging.Note($"Created \"{tableQueryPair.Key}\" Table in Database");
+                }
             }
         }
+    }
+
+    private bool ValidatePath(string path) {
+        if (string.IsNullOrWhiteSpace(path) ||
+            Directory.Exists(path)
+        ) {
+            Logging.Error($"Could not find directory: \"{path}\"");
+            return false;
+        }
+        if (Directory.Exists(path))
+            return false;
+        string? fileName = Path.GetFileName(path);
+        if (string.IsNullOrEmpty(fileName))
+            return false;
+        string? directory = Path.GetDirectoryName(path);
+        if (string.IsNullOrEmpty(directory) || !Directory.Exists(directory))
+            return false;
+
+        return true;
     }
 }
