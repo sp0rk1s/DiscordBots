@@ -6,6 +6,7 @@ namespace AliBot.Data;
 public partial class Database {
 
     public string ConnectionString;
+    public Dictionary<ulong, Player> LoadedPlayers;
 
     public Database(string path) {
         // Verify arguments
