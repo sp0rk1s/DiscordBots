@@ -1,6 +1,6 @@
 ﻿using Microsoft.Data.Sqlite;
 
-namespace AliBot.Databases;
+namespace AliBot.Data;
 public class Database {
 
     private const string CREATE_TABLES_COMMAND = """
