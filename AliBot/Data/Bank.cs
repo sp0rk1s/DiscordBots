@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace AliBot.Data;
+﻿namespace AliBot.Data;
 
 class Bank {
     private readonly Dictionary<int, BankAccount> _accounts;
